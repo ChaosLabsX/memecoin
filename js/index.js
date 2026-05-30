@@ -21,6 +21,10 @@
 
     buildHero(highlighted);
     buildCoinsGrid();
+    // Cards were added after initScrollAnimations() ran — register them now.
+    // observeNewFadeIns handles both: already-visible (fires immediately)
+    // and below-fold (fires when user scrolls to them).
+    observeNewFadeIns(document.getElementById("coins-grid"));
     buildFooterCoinList();
     buildTicker();
 

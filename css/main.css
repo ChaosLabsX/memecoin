@@ -682,30 +682,33 @@ p {
 }
 
 .badge-live {
-  background: rgba(0, 212, 100, 0.15);
-  border: 1px solid rgba(0, 212, 100, 0.4);
-  color: #00d464;
+  background: #00c853;              /* solid green */
+  border: 1px solid #00e676;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 
 .badge-soon {
-  background: rgba(245, 197, 24, 0.12);
-  border: 1px solid rgba(245, 197, 24, 0.3);
-  color: #F5C518;
+  background: #f2be00;              /* solid gold / user's primary */
+  border: 1px solid #ffd740;
+  color: #0A1628;                   /* dark navy text — high contrast on gold */
+  font-weight: 900;
 }
 
 .badge-legacy {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .live-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #00d464;
+  background: #fff;           /* white dot inside the solid green badge */
   animation: pulseDot 1.5s ease-in-out infinite;
   display: inline-block;
+  flex-shrink: 0;
 }
 
 @keyframes pulseDot {
@@ -1104,6 +1107,16 @@ p {
 
 .live-price-change.negative {
   color: #ff4757;
+}
+
+/* ── EMAIL LINK ───────────────────────────────────────────── */
+/* Prevents the ✉ icon and address from breaking across lines */
+.footer__links a[href^="mailto"] {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
 }
 
 /* ── FOOTER ───────────────────────────────────────────────── */

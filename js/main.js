@@ -32,17 +32,35 @@ onReady(async () => {
 });
 
 // ── Scroll fade-in ────────────────────────────────────────────
+// Observer is stored globally so index.js / coin.js can register
+// dynamically added .fade-in elements after the initial scan.
+window._fadeObserver = null;
+
 function initScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
+  window._fadeObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
+        window._fadeObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
 
-  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+  document.querySelectorAll(".fade-in").forEach(el => window._fadeObserver.observe(el));
+}
+
+// Call this after inserting new .fade-in elements into the DOM.
+// Elements already in the viewport will become visible immediately.
+function observeNewFadeIns(containerEl) {
+  if (!window._fadeObserver) return;
+  const els = containerEl
+    ? containerEl.querySelectorAll(".fade-in")
+    : document.querySelectorAll(".fade-in");
+  els.forEach(el => {
+    if (!el.classList.contains("visible")) {
+      window._fadeObserver.observe(el);
+    }
+  });
 }
 
 // ── Mobile nav ────────────────────────────────────────────────

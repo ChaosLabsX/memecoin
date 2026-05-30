@@ -54,6 +54,9 @@
       startLiveData(coin);
     }
 
+    // 8. Register all dynamically rendered .fade-in elements with the observer
+    observeNewFadeIns(document.querySelector("main"));
+
   });
 })();
 
