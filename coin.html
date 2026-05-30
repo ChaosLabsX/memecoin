@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading… — ChaosLabsX</title>
+  <meta name="description" content="Meme coin details — ChaosLabsX">
+
+  <!-- Open Graph (updated by JS) -->
+  <meta property="og:title" content="ChaosLabsX Coin">
+  <meta property="og:description" content="Event-driven meme coin by ChaosLabsX.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/themes.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body id="coin-page-body">
+
+  <!-- ── NAVBAR ──────────────────────────────────────────── -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="navbar-brand">Chaos<span>Labs</span>X</a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="nav-toggle__bars" aria-hidden="true">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+        </span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="/#coins" class="nav-link">Coins</a></li>
+        <li>
+          <a href="https://x.com/ChaosLabsX" class="nav-link nav-link--x" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            @ChaosLabsX
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── COIN HERO ────────────────────────────────────────── -->
+  <section class="hero" id="coin-hero" aria-label="Coin hero">
+    <div class="hero__bg" id="coin-hero-bg">
+      <div class="hero__bg--gradient"></div>
+    </div>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content container">
+      <!-- Logo -->
+      <div id="coin-logo-wrap">
+        <div class="coin-hero__logo-placeholder" id="coin-logo-placeholder">🪙</div>
+      </div>
+
+      <!-- Name + ticker + badge -->
+      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:12px;">
+        <h1 class="hero__title" id="coin-name" style="margin-bottom:0; font-size: clamp(2rem,5vw,3.8rem);">…</h1>
+        <span id="coin-ticker" style="font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--color-primary);opacity:.85;"></span>
+        <span id="coin-status-badge"></span>
+      </div>
+
+      <!-- Live price (shown when live) -->
+      <div id="live-price-wrap" style="display:none;">
+        <div class="live-price-display" data-stat="price">--</div>
+        <div class="live-price-change" data-stat="change24h" id="hero-change">--</div>
+      </div>
+
+      <!-- Countdown -->
+      <div id="coin-status-block" style="margin-bottom:32px;">
+        <p class="countdown-label" id="coin-countdown-label"></p>
+        <div id="coin-countdown"></div>
+      </div>
+
+      <!-- CTA -->
+      <div class="hero-cta" id="coin-cta"></div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- ── LIVE STATS BAR ───────────────────────────────── -->
+    <section id="stats-section" style="display:none;" aria-label="Live statistics">
+      <div class="container">
+        <div class="stats-bar">
+          <div class="stat-card stat-skeleton">
+            <p class="stat-card__label">Price</p>
+            <p class="stat-card__value" data-stat="price">--</p>
+          </div>
+          <div class="stat-card stat-skeleton">
+            <p class="stat-card__label">Market Cap</p>
+            <p class="stat-card__value" data-stat="marketcap">--</p>
+          </div>
+          <div class="stat-card stat-skeleton">
+            <p class="stat-card__label">24h Volume</p>
+            <p class="stat-card__value" data-stat="volume24h">--</p>
+          </div>
+          <div class="stat-card stat-skeleton">
+            <p class="stat-card__label">24h Change</p>
+            <p class="stat-card__value" data-stat="change24h">--</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LIVE CHART ────────────────────────────────────── -->
+    <section id="chart-section" class="chart-section" style="display:none;" aria-label="Price chart">
+      <div class="container">
+        <h2 class="section-title fade-in" style="margin-bottom:24px;">Live Chart</h2>
+        <div class="chart-wrapper fade-in">
+          <iframe id="dex-chart-iframe" title="DexScreener price chart" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ABOUT THIS COIN ──────────────────────────────── -->
+    <section class="about-section" id="about" aria-labelledby="about-heading">
+      <div class="container">
+        <div class="fade-in">
+          <h2 class="section-title" id="about-heading" style="margin-bottom:20px;">About This Coin</h2>
+          <p id="coin-description" style="max-width:70ch; font-size:1.05rem; color:rgba(255,255,255,0.8); line-height:1.8;"></p>
+        </div>
+
+        <!-- Key facts -->
+        <div class="facts-grid fade-in" id="facts-grid" style="margin-top:40px;">
+          <div class="fact-item">
+            <p class="fact-item__label">Launch Platform</p>
+            <p class="fact-item__value" id="fact-platform">--</p>
+          </div>
+          <div class="fact-item">
+            <p class="fact-item__label">Launch Date</p>
+            <p class="fact-item__value" id="fact-launch">--</p>
+          </div>
+          <div class="fact-item">
+            <p class="fact-item__label">End Date</p>
+            <p class="fact-item__value" id="fact-end">--</p>
+          </div>
+          <div class="fact-item">
+            <p class="fact-item__label">Status</p>
+            <p class="fact-item__value" id="fact-status">--</p>
+          </div>
+          <div class="fact-item" id="fact-contract-wrap" style="display:none;">
+            <p class="fact-item__label">Contract Address</p>
+            <p class="fact-item__value" id="fact-contract" style="font-size:0.7rem; word-break:break-all;">--</p>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="fade-in" style="margin-top:48px;">
+          <h3 style="font-family:var(--font-display); font-size:1.1rem; font-weight:800; color:#fff; margin-bottom:24px; text-transform:uppercase; letter-spacing:0.06em;">Journey</h3>
+          <div class="timeline" id="coin-timeline">
+            <div class="timeline-step" id="tl-soon">
+              <div class="timeline-dot">🔜</div>
+              <span class="timeline-step-label">Coming Soon</span>
+            </div>
+            <div class="timeline-step" id="tl-live">
+              <div class="timeline-dot">🟢</div>
+              <span class="timeline-step-label">Live</span>
+            </div>
+            <div class="timeline-step" id="tl-legacy">
+              <div class="timeline-dot">🏆</div>
+              <span class="timeline-step-label">Legacy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── HOW TO BUY ────────────────────────────────────── -->
+    <section class="how-to-buy" id="how-to-buy" aria-labelledby="htb-heading">
+      <div class="container">
+        <h2 class="section-title fade-in" id="htb-heading" style="margin-bottom: 36px;">How to Buy</h2>
+        <ol class="steps-list" aria-label="Steps to buy">
+          <li class="step-item fade-in">
+            <span class="step-number">1</span>
+            <div class="step-text">
+              <strong>Get a Solana Wallet</strong>
+              Download <a href="https://phantom.app" target="_blank" rel="noopener" style="color:var(--color-primary);">Phantom</a>
+              or <a href="https://solflare.com" target="_blank" rel="noopener" style="color:var(--color-primary);">Solflare</a>
+              — free, takes 2 minutes to set up.
+            </div>
+          </li>
+          <li class="step-item fade-in">
+            <span class="step-number">2</span>
+            <div class="step-text">
+              <strong>Buy SOL</strong>
+              Purchase SOL on Coinbase, Binance, or any exchange, then send it to your wallet address.
+            </div>
+          </li>
+          <li class="step-item fade-in">
+            <span class="step-number">3</span>
+            <div class="step-text">
+              <strong>Go to Pump.fun</strong>
+              Visit <a href="https://pump.fun" target="_blank" rel="noopener" style="color:var(--color-primary);">pump.fun</a>
+              and connect your Solana wallet.
+            </div>
+          </li>
+          <li class="step-item fade-in">
+            <span class="step-number">4</span>
+            <div class="step-text">
+              <strong id="htb-step4-title">Search the Ticker & Swap</strong>
+              <span id="htb-step4-body">Search for the ticker in the Pump.fun search bar and swap your SOL for the coin.</span>
+            </div>
+          </li>
+          <li class="step-item fade-in">
+            <span class="step-number">5</span>
+            <div class="step-text">
+              <strong>Hold Until the Final Whistle 🏆</strong>
+              Sit back, enjoy the event, and sell when the time is right.
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ── COMMUNITY & LINKS ────────────────────────────── -->
+    <section class="community-section" id="community" aria-labelledby="community-heading">
+      <div class="container">
+        <h2 class="section-title fade-in" id="community-heading" style="margin-bottom:14px;">Community &amp; Links</h2>
+        <p class="fade-in" style="color:var(--color-text-muted); margin-bottom:0;">
+          Join the conversation, follow for live updates, and never miss a launch.
+        </p>
+        <div class="social-links fade-in" id="social-links">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WAITLIST FORM ────────────────────────────────── -->
+    <section id="waitlist-section" style="display:none; padding: 80px 0;" aria-labelledby="waitlist-heading">
+      <div class="container">
+        <div class="glass-card fade-in" style="max-width: 560px; margin: 0 auto; text-align: center;">
+          <h2 class="section-title" id="waitlist-heading" style="margin-bottom:12px;" id="waitlist-coin-name">
+            Get Notified When We Go Live
+          </h2>
+          <p style="color:var(--color-text-muted); margin-bottom:28px;" id="waitlist-coin-sub">
+            Be the first to know the moment the coin launches. Early buyers get the best price.
+          </p>
+          <form class="waitlist-form" id="coin-waitlist-form" data-coin-id="" style="justify-content:center;">
+            <input type="email" placeholder="your@email.com" required autocomplete="email">
+            <button type="submit" class="btn btn-primary">Notify Me 🚀</button>
+          </form>
+          <div class="waitlist-message" id="coin-waitlist-msg"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <footer class="footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">Chaos<span>Labs</span>X</div>
+          <p class="footer__tagline">
+            We launch event-driven meme coins. Each one born with a purpose, buried with a trophy.
+          </p>
+        </div>
+        <div>
+          <p class="footer__heading">Navigation</p>
+          <ul class="footer__links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#coins">All Coins</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__heading">Community</p>
+          <ul class="footer__links">
+            <li>
+              <a href="https://x.com/ChaosLabsX" target="_blank" rel="noopener">✕ @ChaosLabsX</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 ChaosLabsX. All rights reserved.</p>
+        <p class="footer__disclaimer">
+          Meme coins are highly speculative assets. Trading involves substantial risk of loss.
+          This is not financial advice. Never invest more than you can afford to lose.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ──────────────────────────────────────────── -->
+  <script src="/js/coins.js"></script>
+  <script src="/js/countdown.js"></script>
+  <script src="/js/dexscreener.js"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/coin.js"></script>
+
+</body>
+</html>

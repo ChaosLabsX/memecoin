@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChaosLabsX — Meme Coin Studio</title>
+  <meta name="description" content="ChaosLabsX launches event-driven meme coins. Ride the chaos from first whistle to final buzzer.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ChaosLabsX — Meme Coin Studio">
+  <meta property="og:description" content="Event-driven meme coins. Ride the chaos.">
+  <meta property="og:image" content="/assets/og-image.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/themes.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────── -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="/" class="navbar-brand">Chaos<span>Labs</span>X</a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="nav-toggle__bars" aria-hidden="true">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+        </span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="/" class="nav-link">Home</a></li>
+        <li><a href="#coins" class="nav-link">Coins</a></li>
+        <li>
+          <a href="https://x.com/ChaosLabsX" class="nav-link nav-link--x" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            @ChaosLabsX
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO (HIGHLIGHTED COIN TAKEOVER) ────────────────── -->
+  <section class="hero" id="hero" aria-label="Featured coin">
+    <div class="hero__bg" id="hero-bg">
+      <div class="hero__bg--gradient"></div>
+    </div>
+    <div class="hero__overlay" id="hero-overlay"></div>
+
+    <div class="hero__content container">
+      <span class="hero__eyebrow" id="hero-eyebrow">Featured Coin</span>
+      <h1 class="hero__title" id="hero-title">Loading…</h1>
+      <p class="hero__subtitle" id="hero-subtitle"></p>
+
+      <div id="hero-status-block" class="hero-status-block">
+        <p class="countdown-label" id="countdown-label"></p>
+        <div id="hero-countdown"></div>
+      </div>
+
+      <div class="hero-cta" id="hero-cta"></div>
+
+      <div id="hero-waitlist" style="display:none; margin-top: 32px;">
+        <div class="waitlist-block">
+          <p class="waitlist-block__title">Get Notified at Launch</p>
+          <p class="waitlist-block__sub" id="hero-waitlist-sub"></p>
+          <form class="waitlist-form" id="hero-waitlist-form" data-coin-id="">
+            <input type="email" placeholder="your@email.com" required autocomplete="email">
+            <button type="submit" class="btn btn-primary">Notify Me</button>
+          </form>
+          <div class="waitlist-message" id="hero-waitlist-msg"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LIVE TICKER BAR ──────────────────────────────────── -->
+  <div class="ticker-bar" id="ticker-bar" aria-label="Live prices" role="marquee">
+    <div class="ticker-inner" id="ticker-track">
+      <span class="ticker-item">Loading live data…</span>
+    </div>
+  </div>
+
+  <!-- ── ALL COINS GRID ───────────────────────────────────── -->
+  <main>
+    <section class="coins-section" id="coins" aria-labelledby="coins-heading">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title" id="coins-heading">All Coins</h2>
+          <p class="section-subtitle">Each coin is born from an event. Buy early, ride the wave, exit at the final whistle.</p>
+        </div>
+        <div class="coins-grid" id="coins-grid">
+          <!-- Coin cards injected by JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <footer class="footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">Chaos<span>Labs</span>X</div>
+          <p class="footer__tagline">
+            We launch event-driven meme coins. Each one born with a purpose, buried with a trophy.
+          </p>
+        </div>
+
+        <div>
+          <p class="footer__heading">Coins</p>
+          <ul class="footer__links" id="footer-coins-list">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+
+        <div>
+          <p class="footer__heading">Community</p>
+          <ul class="footer__links">
+            <li>
+              <a href="https://x.com/ChaosLabsX" target="_blank" rel="noopener">
+                ✕ @ChaosLabsX
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 ChaosLabsX. All rights reserved.</p>
+        <p class="footer__disclaimer">
+          Meme coins are highly speculative assets. Trading involves substantial risk of loss.
+          This is not financial advice. Never invest more than you can afford to lose.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ──────────────────────────────────────────── -->
+  <script src="/js/coins.js"></script>
+  <script src="/js/countdown.js"></script>
+  <script src="/js/dexscreener.js"></script>
+  <script src="/js/supabase.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/index.js"></script>
+
+</body>
+</html>

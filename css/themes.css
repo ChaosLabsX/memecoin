@@ -1,0 +1,79 @@
+/* ============================================================
+   THEMES.CSS — per-coin color palettes
+   ============================================================
+   HOW TO ADD A NEW COIN THEME:
+     1. Copy the body.theme-wcmc26 block below
+     2. Rename it to body.theme-yourcoinid
+     3. Change the color values to match your coin's palette
+     4. In coins.js, set theme: "yourcoinid" on your coin object
+   ============================================================ */
+
+/* ── WCMC26: World Cup Meme Coin 2026 ──────────────────────── */
+body.theme-wcmc26 {
+  --color-primary:      #F5C518;   /* Trophy Gold */
+  --color-secondary:    #00A86B;   /* Pitch Green */
+  --color-dark:         #0A1628;   /* Midnight Navy */
+  --color-accent:       #E63946;   /* Red Card */
+  --color-text-on-dark: #ffffff;
+  --color-text-muted:   rgba(255, 255, 255, 0.55);
+  --color-glass-bg:     rgba(10, 22, 40, 0.55);
+  --color-glass-border: rgba(245, 197, 24, 0.18);
+  --gradient-hero:      linear-gradient(to bottom, rgba(10,22,40,0.25), rgba(10,22,40,0.92));
+  --gradient-primary:   linear-gradient(135deg, #F5C518, #e6a800);
+  --shadow-glow:        0 0 30px rgba(245, 197, 24, 0.35);
+  --shadow-glow-hover:  0 0 50px rgba(245, 197, 24, 0.6);
+  background-color:     var(--color-dark);
+}
+
+/* ── DEFAULT / GLOBAL (no specific coin) ───────────────────── */
+/* Applied on index.html where no coin theme is set */
+:root {
+  --color-primary:      #6c63ff;
+  --color-secondary:    #00d4aa;
+  --color-dark:         #0d0d0d;
+  --color-accent:       #ff4757;
+  --color-text-on-dark: #ffffff;
+  --color-text-muted:   rgba(255, 255, 255, 0.55);
+  --color-glass-bg:     rgba(255, 255, 255, 0.06);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --gradient-hero:      linear-gradient(to bottom, rgba(13,13,13,0.2), rgba(13,13,13,0.9));
+  --gradient-primary:   linear-gradient(135deg, #6c63ff, #5a52d5);
+  --shadow-glow:        0 0 30px rgba(108, 99, 255, 0.35);
+  --shadow-glow-hover:  0 0 50px rgba(108, 99, 255, 0.6);
+
+  /* Layout */
+  --navbar-height:      70px;
+  --max-width:          1200px;
+  --radius-sm:          8px;
+  --radius-md:          14px;
+  --radius-lg:          24px;
+  --radius-pill:        9999px;
+
+  /* Typography */
+  --font-display:       "Barlow Condensed", sans-serif;
+  --font-body:          "Barlow", sans-serif;
+
+  /* Transitions */
+  --transition-fast:    0.15s ease;
+  --transition-base:    0.25s ease;
+  --transition-slow:    0.4s ease;
+}
+
+/* ── ADD NEW COIN THEMES BELOW ──────────────────────────────── */
+/* Example:
+body.theme-mynewcoin {
+  --color-primary:      #FF6B00;
+  --color-secondary:    #1A1A2E;
+  --color-dark:         #0D0D0D;
+  --color-accent:       #FFD700;
+  --color-text-on-dark: #ffffff;
+  --color-text-muted:   rgba(255, 255, 255, 0.55);
+  --color-glass-bg:     rgba(13, 13, 13, 0.6);
+  --color-glass-border: rgba(255, 107, 0, 0.2);
+  --gradient-hero:      linear-gradient(to bottom, rgba(13,13,13,0.2), rgba(13,13,13,0.92));
+  --gradient-primary:   linear-gradient(135deg, #FF6B00, #cc5500);
+  --shadow-glow:        0 0 30px rgba(255, 107, 0, 0.35);
+  --shadow-glow-hover:  0 0 50px rgba(255, 107, 0, 0.6);
+  background-color:     var(--color-dark);
+}
+*/
