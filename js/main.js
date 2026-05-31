@@ -29,6 +29,9 @@ onReady(async () => {
 
   // 6. Smooth scroll for anchor links
   initSmoothScroll();
+
+  // 7. Home link → scroll-to-top when already on the home page
+  initHomeNavScroll();
 });
 
 // ── Scroll fade-in ────────────────────────────────────────────
@@ -112,6 +115,28 @@ function initSmoothScroll() {
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
+    });
+  });
+}
+
+// ── Home link: scroll to top when already on the home page ────
+function initHomeNavScroll() {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href !== '/' && href !== '/index.html') return;
+
+    link.addEventListener('click', e => {
+      const isHome = ['/', '/index.html'].includes(window.location.pathname);
+      if (!isHome) return;
+
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Close mobile menu if open
+      const menu = document.getElementById('nav-menu');
+      const toggle = document.getElementById('nav-toggle');
+      if (menu) menu.classList.remove('open');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
     });
   });
 }

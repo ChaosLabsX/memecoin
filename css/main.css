@@ -23,6 +23,7 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 img {
@@ -98,12 +99,13 @@ p {
   right: 0;
   z-index: 1000;
   height: var(--navbar-height, 70px);
-  background: rgba(10, 10, 10, 0.8);
+  background: var(--bg-navbar);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .navbar .container {
@@ -115,14 +117,22 @@ p {
 .navbar-brand {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: var(--text-primary);
   white-space: nowrap;
+  transition: color 0.3s ease;
 }
 
 .navbar-brand span {
   color: var(--color-primary, #6c63ff);
+}
+
+/* Right-side group: theme toggle + hamburger + menu */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .nav-menu {
@@ -140,30 +150,30 @@ p {
   border-radius: var(--radius-pill);
   font-size: 0.9rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-muted);
   transition: color var(--transition-fast), background var(--transition-fast);
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  background: var(--hover-bg);
 }
 
 .nav-link--x {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--hover-surface);
+  border: 1px solid var(--border-medium);
 }
 
 .nav-link--x:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--hover-bg-strong);
+  border-color: var(--border-strong);
 }
 
 .nav-toggle {
   display: none;
   background: none;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-sm);
   padding: 9px 10px;
   cursor: pointer;
@@ -176,8 +186,8 @@ p {
 }
 
 .nav-toggle:hover {
-  border-color: rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-stronger);
+  background: var(--hover-surface);
 }
 
 /* ── Animated hamburger bars ─────────────────────────────── */
@@ -194,7 +204,7 @@ p {
   display: block;
   width: 100%;
   height: 2px;
-  background: #fff;
+  background: var(--text-primary);
   border-radius: 2px;
   transform-origin: center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -202,7 +212,6 @@ p {
     width 0.3s ease;
 }
 
-/* When open: top bar rotates to \, middle fades, bottom bar rotates to / */
 .nav-toggle[aria-expanded="true"] .bar-1 {
   transform: translateY(7px) rotate(45deg);
 }
@@ -215,6 +224,42 @@ p {
 .nav-toggle[aria-expanded="true"] .bar-3 {
   transform: translateY(-7px) rotate(-45deg);
 }
+
+/* ── THEME TOGGLE BUTTON ──────────────────────────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--hover-surface);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast), transform 0.35s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--hover-bg);
+  border-color: var(--border-strong);
+  transform: rotate(22deg);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Dark mode → show sun (offers switch to light) */
+html:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+
+/* Light mode → show moon (offers switch to dark) */
+html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
 
 /* ── HERO SECTION ─────────────────────────────────────────── */
 .hero {
@@ -273,6 +318,7 @@ p {
   opacity: 0.9;
 }
 
+/* Hero text is always white — it sits on a dark overlay gradient */
 .hero__title {
   color: #fff;
   margin-bottom: 20px;
@@ -372,6 +418,21 @@ p {
   gap: 16px;
 }
 
+/* Waitlist form lives inside the hero (always dark overlay) — keep it dark */
+.hero .waitlist-form input[type="email"] {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.hero .waitlist-form input[type="email"]::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.hero .waitlist-form input[type="email"]:focus {
+  background: rgba(255, 255, 255, 0.11);
+}
+
 /* ── BUTTONS ──────────────────────────────────────────────── */
 .btn {
   display: inline-flex;
@@ -392,22 +453,9 @@ p {
   white-space: nowrap;
 }
 
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
 .btn-primary {
   background: var(--gradient-primary, linear-gradient(135deg, #6c63ff, #5a52d5));
   color: #fff;
-  box-shadow: var(--shadow-glow);
-}
-
-.btn-primary:hover {
-  box-shadow: var(--shadow-glow-hover);
 }
 
 .btn-outline {
@@ -418,19 +466,19 @@ p {
 }
 
 .btn-outline:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--hover-surface);
   box-shadow: var(--shadow-glow);
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.07);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--hover-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-input);
 }
 
 .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--hover-bg-strong);
+  border-color: var(--border-strong);
 }
 
 .btn-sm {
@@ -445,13 +493,14 @@ p {
 
 /* ── LIVE TICKER BAR ──────────────────────────────────────── */
 .ticker-bar {
-  background: rgba(0, 0, 0, 0.6);
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: var(--bg-ticker);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
   overflow: hidden;
   height: 44px;
   display: flex;
   align-items: center;
+  transition: background 0.3s ease;
 }
 
 .ticker-inner {
@@ -482,7 +531,7 @@ p {
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-body);
 }
 
 .ticker-link {
@@ -497,7 +546,7 @@ p {
 }
 
 .ticker-price {
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .ticker-change.positive {
@@ -514,13 +563,13 @@ p {
 }
 
 .ticker-divider {
-  color: rgba(255, 255, 255, 0.2);
+  color: var(--text-subtle);
   padding: 0 6px;
 }
 
 /* ── COIN CARDS GRID ──────────────────────────────────────── */
 .coins-section {
-  padding: 90px 0;
+  padding: 60px 0;
 }
 
 .section-header {
@@ -529,7 +578,7 @@ p {
 }
 
 .section-title {
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 14px;
 }
 
@@ -548,7 +597,7 @@ p {
 
 .coin-card {
   background: var(--color-glass-bg, rgba(255, 255, 255, 0.04));
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--border-base);
   border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: pointer;
@@ -560,7 +609,7 @@ p {
 .coin-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: var(--border-strong);
 }
 
 .coin-card--highlighted {
@@ -577,7 +626,7 @@ p {
 
 .coin-card__thumb {
   height: 180px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--hover-surface);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -596,7 +645,7 @@ p {
 }
 
 /* Old class kept for compatibility; new fallback uses .thumb-fallback */
-.thumb-missing { background: rgba(255,255,255,0.03); }
+.thumb-missing { background: var(--hover-surface); }
 
 /* Thumbnail fallback — shown when the image file is missing */
 .thumb-fallback {
@@ -633,7 +682,7 @@ p {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .coin-card__ticker {
@@ -698,30 +747,30 @@ p {
 }
 
 .badge-live {
-  background: #00c853;              /* solid green */
+  background: #00c853;
   border: 1px solid #00e676;
   color: #fff;
   text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 
 .badge-soon {
-  background: #f2be00;              /* solid gold / user's primary */
+  background: #f2be00;
   border: 1px solid #ffd740;
-  color: #0A1628;                   /* dark navy text — high contrast on gold */
+  color: #0A1628;
   font-weight: 900;
 }
 
 .badge-legacy {
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  color: rgba(255, 255, 255, 0.65);
+  background: var(--hover-bg);
+  border: 1px solid var(--border-strong);
+  color: var(--color-text-muted);
 }
 
 .live-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fff;           /* white dot inside the solid green badge */
+  background: #fff;
   animation: pulseDot 1.5s ease-in-out infinite;
   display: inline-block;
   flex-shrink: 0;
@@ -788,7 +837,7 @@ p {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 900;
-  color: #fff;
+  color: var(--text-primary);
   transition: color var(--transition-fast);
 }
 
@@ -802,7 +851,7 @@ p {
 
 /* Skeleton loader */
 .stat-skeleton .stat-card__value {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--hover-bg);
   border-radius: 6px;
   color: transparent;
   animation: shimmer 1.5s ease-in-out infinite;
@@ -829,7 +878,7 @@ p {
   font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 6px;
 }
 
@@ -849,22 +898,22 @@ p {
   flex: 1;
   min-width: 200px;
   padding: 13px 18px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--bg-input);
+  border: 1px solid var(--border-input);
   border-radius: var(--radius-pill);
-  color: #fff;
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.95rem;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
 .waitlist-form input[type="email"]::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-subtle);
 }
 
 .waitlist-form input[type="email"]:focus {
   border-color: var(--color-primary);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-input-focus);
 }
 
 .waitlist-message {
@@ -930,7 +979,7 @@ p {
 
 .step-text {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-body);
   line-height: 1.6;
 }
 
@@ -938,7 +987,7 @@ p {
   display: block;
   font-family: var(--font-display);
   font-size: 1.05rem;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 2px;
 }
 
@@ -975,7 +1024,7 @@ p {
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 /* ── TIMELINE ─────────────────────────────────────────────── */
@@ -1002,7 +1051,7 @@ p {
   right: 0;
   left: 50%;
   height: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border-medium);
 }
 
 .timeline-step.active::after {
@@ -1013,8 +1062,8 @@ p {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.07);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: var(--hover-surface);
+  border: 2px solid var(--border-input);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1099,7 +1148,6 @@ p {
   justify-content: center;
   margin-bottom: 20px;
   box-shadow: var(--shadow-glow);
-  /* Ticker initials text */
   font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 900;
@@ -1134,7 +1182,6 @@ p {
 }
 
 /* ── EMAIL LINK ───────────────────────────────────────────── */
-/* Prevents the ✉ icon and address from breaking across lines */
 .footer__links a[href^="mailto"] {
   white-space: nowrap;
   overflow: hidden;
@@ -1145,9 +1192,10 @@ p {
 
 /* ── FOOTER ───────────────────────────────────────────────── */
 .footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid var(--border-subtle);
   padding: 50px 0 30px;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg-footer);
+  transition: background 0.3s ease;
 }
 
 .footer__grid {
@@ -1160,8 +1208,8 @@ p {
 .footer__brand-name {
   font-family: var(--font-display);
   font-size: 1.4rem;
-  font-weight: 900;
-  color: #fff;
+  font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
@@ -1195,7 +1243,7 @@ p {
 
 .footer__links a {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--color-text-muted);
   transition: color var(--transition-fast);
 }
 
@@ -1204,7 +1252,7 @@ p {
 }
 
 .footer__bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--border-hairline);
   padding-top: 24px;
   display: flex;
   flex-wrap: wrap;
@@ -1215,12 +1263,12 @@ p {
 
 .footer__copy {
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.35);
+  color: var(--text-subtle);
 }
 
 .footer__disclaimer {
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--text-subtle);
   max-width: 60ch;
   line-height: 1.5;
 }
@@ -1257,6 +1305,7 @@ p {
 /* ── HERO STATUS BLOCKS ───────────────────────────────────── */
 .hero-status-block {}
 
+/* Inside hero — always white */
 .hero-launch-info {
   font-family: var(--font-display);
   font-size: 1rem;
@@ -1286,7 +1335,7 @@ p {
 /* ── DIVIDER ──────────────────────────────────────────────── */
 .divider {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid var(--border-subtle);
   margin: 0;
 }
 
@@ -1302,17 +1351,13 @@ p {
 }
 
 /* ── Mobile nav — smooth slide-down transition ────────────── */
-/* The menu is always in the DOM as flex; visibility + opacity
-   allow CSS transitions that display:none cannot provide.     */
 @media (max-width: 600px) {
 
-  /* Show hamburger, hide desktop menu items from flow */
   .nav-toggle {
     display: flex;
   }
 
   .nav-menu {
-    /* Layout */
     position: fixed;
     top: var(--navbar-height, 70px);
     left: 0;
@@ -1321,13 +1366,12 @@ p {
     align-items: stretch;
     padding: 12px 16px 20px;
     gap: 4px;
-    background: rgba(8, 8, 12, 0.97);
+    background: var(--bg-mobile-menu);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--border-subtle);
     z-index: 999;
 
-    /* Hidden state — invisible but still in flow for transitions */
     visibility: hidden;
     opacity: 0;
     transform: translateY(-8px);
@@ -1335,10 +1379,8 @@ p {
     transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
       visibility 0s linear 0.28s;
-    /* delay hides after fade-out */
   }
 
-  /* Open state */
   .nav-menu.open {
     visibility: visible;
     opacity: 1;
@@ -1347,7 +1389,6 @@ p {
     transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
       transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
       visibility 0s linear 0s;
-    /* show immediately on open */
   }
 
   .nav-link {
@@ -1357,7 +1398,6 @@ p {
     transition: background var(--transition-fast), color var(--transition-fast);
   }
 
-  /* ── Hero content — balanced side padding on small screens ── */
   .container {
     padding: 0 18px;
   }
@@ -1367,7 +1407,6 @@ p {
     padding-bottom: 20px;
   }
 
-  /* Tighter headline so it never overflows the viewport */
   .hero__title {
     font-size: clamp(2rem, 9.5vw, 3rem);
     max-width: 100%;
@@ -1384,7 +1423,6 @@ p {
     margin-bottom: 12px;
   }
 
-  /* Countdown fits tighter on small phones */
   .countdown-units {
     gap: 5px;
     flex-wrap: nowrap;
@@ -1404,7 +1442,6 @@ p {
     margin-bottom: 12px;
   }
 
-  /* ── Other small-screen layouts ───────────────────────── */
   .stats-bar {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -1420,7 +1457,26 @@ p {
   }
 
   .coins-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 14px;
+    padding-bottom: 12px;
+    /* Extend to screen edges for full-bleed scroll */
+    margin: 0 -18px;
+    padding-left: 18px;
+    padding-right: 18px;
+    scrollbar-width: none;
+  }
+
+  .coins-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .coins-grid .coin-card {
+    flex: 0 0 272px;
+    scroll-snap-align: start;
   }
 
   .waitlist-form {

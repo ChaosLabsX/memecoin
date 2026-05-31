@@ -6,8 +6,8 @@
 //   SUPABASE_ANON_KEY → Settings → API → anon public key
 // ============================================================
 
-const SUPABASE_URL = "YOUR_SUPABASE_URL_HERE";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY_HERE";
+const SUPABASE_URL = "https://jraxygkylcjqghthuvem.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpyYXh5Z2t5bGNqcWdodGh1dmVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMzMyNTAsImV4cCI6MjA5NTcwOTI1MH0.Ak2fpOAYpXk8O2HulSEuaXKjW7NSGyBGrVgc7XWtMUA";
 
 // Supabase client is loaded via CDN in HTML.
 // This variable is set after DOMContentLoaded to ensure the CDN script is ready.
