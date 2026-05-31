@@ -194,7 +194,8 @@ function buildCoinCard(coin) {
              role="button" tabindex="0"
              aria-label="View ${coin.fullName}">
       <div class="coin-card__thumb">
-        <img src="${coin.media.thumbnail}" alt="${coin.name} thumbnail"
+        <img src="${coin.media.thumbnail}" alt="${coin.name} — ${coin.ticker} meme coin"
+             loading="lazy" width="300" height="180"
              onerror="onThumbError(this, '${coin.ticker}')">
       </div>
       <div class="coin-card__body">

@@ -43,7 +43,7 @@ function buildHero(coin) {
   const title = document.getElementById("hero-title");
   if (title) {
     if (coin.id === "wcmc26") {
-      title.innerHTML = `The World Cup<br>has a <em>coin</em>`;
+      title.innerHTML = `The World Cup<br>has a <em>meme coin</em>`;
     } else {
       title.textContent = coin.fullName;
     }
@@ -53,7 +53,7 @@ function buildHero(coin) {
   const sub = document.getElementById("hero-subtitle");
   if (sub) {
     if (coin.id === "wcmc26") {
-      sub.textContent = `Ride ${coin.ticker} from Opening Day to the Final Whistle`;
+      sub.textContent = `The viral World Cup meme coin of 2026 — ride ${coin.ticker} from Opening Day to the Final.`;
     } else {
       sub.textContent = coin.description;
     }
@@ -104,7 +104,7 @@ function buildHero(coin) {
     // Waitlist form
     if (waitlistEl) waitlistEl.style.display = "block";
     if (waitlistSub) {
-      waitlistSub.textContent = `Be first to know when ${coin.ticker} goes live.`;
+      waitlistSub.textContent = `Be first to buy ${coin.ticker} — the viral World Cup meme coin — the moment it goes live.`;
     }
     if (waitlistForm) {
       waitlistForm.dataset.coinId = coin.id;

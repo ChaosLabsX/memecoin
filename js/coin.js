@@ -31,14 +31,8 @@
     // 4. Apply theme to body
     document.body.classList.add(`theme-${coin.theme}`);
 
-    // 5. Update page title & meta
-    document.title = `${coin.name} (${coin.ticker}) — ChaosLabsX`;
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.content = `${coin.fullName} — ChaosLabsX`;
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) ogDesc.content = coin.description;
-    const ogImg = document.querySelector('meta[property="og:image"]');
-    if (ogImg && coin.media.thumbnail) ogImg.content = coin.media.thumbnail;
+    // 5. Update all SEO meta tags
+    updateCoinSEO(coin);
 
     // 6. Render all sections
     renderHero(coin);
@@ -329,6 +323,82 @@ function renderWaitlist(coin) {
         btn.disabled = false;
         btn.textContent = "Notify Me 🚀";
       }
+    });
+  }
+}
+
+// ── SEO META + JSON-LD ────────────────────────────────────────
+function updateCoinSEO(coin) {
+  const base    = "https://chaoslabsx.com";
+  const pageUrl = `${base}/coin.html?id=${coin.id}`;
+  const imgUrl  = coin.media.thumbnail
+    ? `${base}${coin.media.thumbnail}`
+    : `${base}/assets/og-image.png`;
+
+  // <title>
+  const statusLabel = { coming_soon: "Buy Soon", live: "Buy Now", legacy: "View History" };
+  document.title = `${coin.fullName} (${coin.ticker}) — ${statusLabel[coin.status] || "Buy"} | ChaosLabsX`;
+
+  // <meta name="description">
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.content =
+    `${coin.status === "live" ? "Buy" : "Join the waitlist for"} ${coin.ticker} — ${coin.description.slice(0, 120)}… Track live price, join the memecoin community, and ride this viral ${coin.ticker} event-driven meme coin.`;
+
+  // <meta name="keywords">
+  const metaKw = document.querySelector('meta[name="keywords"]');
+  if (metaKw) metaKw.content =
+    `${coin.name}, ${coin.ticker}, ${coin.fullName}, buy ${coin.ticker}, viral memecoin, best memecoin, memecoin community, world cup memecoin, buy meme coin, event-driven meme coin, ChaosLabsX`;
+
+  // Canonical
+  const canonical = document.getElementById('canonical-tag');
+  if (canonical) canonical.href = pageUrl;
+
+  // Open Graph
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.content = val; };
+  set('og-url',    pageUrl);
+  set('og-title',  `${coin.fullName} (${coin.ticker}) — Buy the Best Viral Memecoin | ChaosLabsX`);
+  set('og-desc',   `${coin.description.slice(0, 155)}…`);
+  set('og-image',  imgUrl);
+  set('tw-title',  `${coin.fullName} (${coin.ticker}) | ChaosLabsX`);
+  set('tw-desc',   `Buy ${coin.ticker} — a viral event-driven memecoin by ChaosLabsX. Join the community and ride it from launch to finish.`);
+  set('tw-image',  imgUrl);
+
+  // og:url (uses property selector, not id)
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  if (ogUrl) ogUrl.content = pageUrl;
+
+  // JSON-LD — BreadcrumbList + Product
+  const ld = document.getElementById('page-jsonld');
+  if (ld) {
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home",       "item": base + "/" },
+            { "@type": "ListItem", "position": 2, "name": "Meme Coins", "item": base + "/#coins" },
+            { "@type": "ListItem", "position": 3, "name": coin.fullName, "item": pageUrl }
+          ]
+        },
+        {
+          "@type": "Product",
+          "name": coin.fullName,
+          "alternateName": coin.ticker,
+          "description": coin.description,
+          "url": pageUrl,
+          "image": imgUrl,
+          "brand": { "@type": "Brand", "name": "ChaosLabsX" },
+          "offers": {
+            "@type": "Offer",
+            "availability": coin.status === "live"
+              ? "https://schema.org/InStock"
+              : "https://schema.org/PreOrder",
+            "url": coin.pumpfunUrl || pageUrl,
+            "priceCurrency": "USD"
+          }
+        }
+      ]
     });
   }
 }
