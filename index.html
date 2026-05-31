@@ -109,7 +109,10 @@
           <p class="waitlist-block__title">Get Notified at Launch</p>
           <p class="waitlist-block__sub" id="hero-waitlist-sub"></p>
           <form class="waitlist-form" id="hero-waitlist-form" data-coin-id="">
-            <input type="email" placeholder="your@email.com" required autocomplete="email">
+            <input type="email" placeholder="your@gmail.com" required autocomplete="email"
+                   pattern="[^@\s]+@gmail\.com"
+                   title="Only Gmail addresses are accepted (e.g. you@gmail.com)"
+                   oninput="this.value=this.value.toLowerCase()">
             <button type="submit" class="btn btn-primary">Notify Me</button>
           </form>
           <div class="waitlist-message" id="hero-waitlist-msg"></div>

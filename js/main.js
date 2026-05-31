@@ -15,23 +15,24 @@ onReady(async () => {
   // 1. Sync live data from Supabase (overrides local coins.js config)
   await syncCoinsFromSupabase();
 
-  // 2. Bind waitlist forms (present on both pages)
-  bindWaitlistForms();
-
-  // 3. Scroll-fade animations via Intersection Observer
+  // 2. Scroll-fade animations via Intersection Observer
   initScrollAnimations();
 
-  // 4. Mobile nav toggle
+  // 3. Mobile nav toggle
   initMobileNav();
 
-  // 5. Active nav link
+  // 4. Active nav link
   highlightActiveNav();
 
-  // 6. Smooth scroll for anchor links
+  // 5. Smooth scroll for anchor links
   initSmoothScroll();
 
-  // 7. Home link → scroll-to-top when already on the home page
+  // 6. Home link → scroll-to-top when already on the home page
   initHomeNavScroll();
+
+  // NOTE: Waitlist form submit handlers are attached by each page's own script
+  //       (index.js → buildHero, coin.js → renderWaitlist).
+  //       bindWaitlistForms() is NOT called here to avoid double-binding.
 });
 
 // ── Scroll fade-in ────────────────────────────────────────────

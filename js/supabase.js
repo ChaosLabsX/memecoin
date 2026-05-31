@@ -74,8 +74,8 @@ async function joinWaitlist(email, coinId) {
   }
   if (!initSupabase()) return { success: false, error: "Supabase not initialized." };
 
-  if (!email || !email.includes("@")) {
-    return { success: false, error: "Please enter a valid email address." };
+  if (!email || !/^[^\s@]+@gmail\.com$/i.test(email)) {
+    return { success: false, error: "Only Gmail addresses are accepted (e.g. you@gmail.com)." };
   }
 
   try {

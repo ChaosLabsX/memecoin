@@ -256,10 +256,14 @@ p {
 }
 
 /* Dark mode → show sun (offers switch to light) */
-html:not([data-theme="light"]) .theme-toggle .icon-moon { display: none; }
+html:not([data-theme="light"]) .theme-toggle .icon-moon {
+  display: none;
+}
 
 /* Light mode → show moon (offers switch to dark) */
-html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
+html[data-theme="light"] .theme-toggle .icon-sun {
+  display: none;
+}
 
 /* ── HERO SECTION ─────────────────────────────────────────── */
 .hero {
@@ -645,12 +649,14 @@ html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
 }
 
 /* Old class kept for compatibility; new fallback uses .thumb-fallback */
-.thumb-missing { background: var(--hover-surface); }
+.thumb-missing {
+  background: var(--hover-surface);
+}
 
 /* Thumbnail fallback — shown when the image file is missing */
 .thumb-fallback {
-  background: var(--color-glass-bg, rgba(255,255,255,0.05));
-  border-bottom: 1px solid var(--color-glass-border, rgba(255,255,255,0.08));
+  background: var(--color-glass-bg, rgba(255, 255, 255, 0.05));
+  border-bottom: 1px solid var(--color-glass-border, rgba(255, 255, 255, 0.08));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -750,7 +756,7 @@ html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
   background: #00c853;
   border: 1px solid #00e676;
   color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .badge-soon {
@@ -914,6 +920,11 @@ html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
 .waitlist-form input[type="email"]:focus {
   border-color: var(--color-primary);
   background: var(--bg-input-focus);
+}
+
+/* Red border when user has typed something that doesn't match @gmail.com */
+.waitlist-form input[type="email"]:invalid:not(:placeholder-shown) {
+  border-color: #ff4757;
 }
 
 .waitlist-message {
@@ -1141,7 +1152,7 @@ html[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
   height: 80px;
   border-radius: 50%;
   border: 3px solid var(--color-primary);
-  background: var(--color-glass-bg, rgba(255,255,255,0.06));
+  background: var(--color-glass-bg, rgba(255, 255, 255, 0.06));
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
