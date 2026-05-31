@@ -48,8 +48,23 @@ class CountdownTimer {
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    // ── Calendar-aware day count ───────────────────────────────
+    // Count midnight→midnight boundaries in the user's LOCAL timezone
+    // so the display matches intuition: "May 31 → June 11 = 11 days",
+    // not the 24-hour-block count which floors to 10 once any hours
+    // have elapsed on the starting day.
+    const todayMidnight  = new Date(now);
+    todayMidnight.setHours(0, 0, 0, 0);            // midnight, local tz
+    const targetMidnight = new Date(this.targetDate);
+    targetMidnight.setHours(0, 0, 0, 0);            // midnight, local tz
+    const days = Math.max(
+      0,
+      Math.round((targetMidnight - todayMidnight) / (1000 * 60 * 60 * 24))
+    );
+
+    // Hours / minutes / seconds stay on the raw diff so the sub-day
+    // units always count down accurately to the exact target moment.
+    const hours   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
