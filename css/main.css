@@ -595,10 +595,26 @@ p {
   transform: scale(1.04);
 }
 
-.thumb-missing::after {
-  content: "🪙";
-  font-size: 3rem;
-  opacity: 0.3;
+/* Old class kept for compatibility; new fallback uses .thumb-fallback */
+.thumb-missing { background: rgba(255,255,255,0.03); }
+
+/* Thumbnail fallback — shown when the image file is missing */
+.thumb-fallback {
+  background: var(--color-glass-bg, rgba(255,255,255,0.05));
+  border-bottom: 1px solid var(--color-glass-border, rgba(255,255,255,0.08));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumb-fallback__text {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+  opacity: 0.55;
+  user-select: none;
 }
 
 .coin-card__body {
@@ -1076,13 +1092,21 @@ p {
   height: 80px;
   border-radius: 50%;
   border: 3px solid var(--color-primary);
-  background: var(--color-glass-bg);
+  background: var(--color-glass-bg, rgba(255,255,255,0.06));
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
   margin-bottom: 20px;
   box-shadow: var(--shadow-glow);
+  /* Ticker initials text */
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+  text-align: center;
+  user-select: none;
 }
 
 .live-price-display {

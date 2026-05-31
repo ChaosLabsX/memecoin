@@ -85,11 +85,20 @@ function renderHero(coin) {
 
   // Logo
   const logoWrap = document.getElementById("coin-logo-wrap");
-  if (logoWrap && coin.media.logo) {
-    logoWrap.innerHTML = `
-      <img class="coin-hero__logo" src="${coin.media.logo}" alt="${coin.name} logo"
-           onerror="this.outerHTML='<div class=\'coin-hero__logo-placeholder\'>🪙</div>'">
-    `;
+  if (logoWrap) {
+    if (coin.media.logo) {
+      // onLogoError is defined in main.js — avoids inline quote-escaping bugs
+      logoWrap.innerHTML = `
+        <img class="coin-hero__logo"
+             src="${coin.media.logo}"
+             alt="${coin.name} logo"
+             onerror="onLogoError(this, '${coin.ticker}')">
+      `;
+    } else {
+      // No logo path defined — show initials placeholder immediately
+      const label = coin.ticker.replace("$", "").slice(0, 5);
+      logoWrap.innerHTML = `<div class="coin-hero__logo-placeholder">${label}</div>`;
+    }
   }
 
   // Name, ticker, badge

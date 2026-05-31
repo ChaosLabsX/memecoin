@@ -116,6 +116,33 @@ function initSmoothScroll() {
   });
 }
 
+// ── Image error handlers ─────────────────────────────────────
+// Defined on window so they're callable from onerror="" attributes
+// without any inline JS quote-escaping (which is where bugs happen).
+
+// Called on the coin hero logo (coin.html)
+window.onLogoError = function(img, ticker) {
+  const label = String(ticker || "?").replace("$", "").slice(0, 5);
+  const div = document.createElement("div");
+  div.className = "coin-hero__logo-placeholder";
+  div.textContent = label;
+  if (img.parentNode) img.parentNode.replaceChild(div, img);
+};
+
+// Called on coin card thumbnails (index.html coins grid)
+window.onThumbError = function(img, ticker) {
+  const label = String(ticker || "?").replace("$", "").slice(0, 5);
+  const wrap = img.closest(".coin-card__thumb");
+  if (wrap) {
+    img.remove();
+    wrap.classList.add("thumb-fallback");
+    const span = document.createElement("span");
+    span.className = "thumb-fallback__text";
+    span.textContent = label;
+    wrap.appendChild(span);
+  }
+};
+
 // ── Utility: status badge HTML ────────────────────────────────
 function statusBadge(status) {
   const map = {
@@ -141,8 +168,8 @@ function buildCoinCard(coin) {
              role="button" tabindex="0"
              aria-label="View ${coin.fullName}">
       <div class="coin-card__thumb">
-        <img src="${coin.media.thumbnail}" alt="${coin.name} logo"
-             onerror="this.style.display='none'; this.parentElement.classList.add('thumb-missing')">
+        <img src="${coin.media.thumbnail}" alt="${coin.name} thumbnail"
+             onerror="onThumbError(this, '${coin.ticker}')">
       </div>
       <div class="coin-card__body">
         <div class="coin-card__header">
