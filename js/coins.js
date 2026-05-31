@@ -30,7 +30,7 @@ const COINS = {
     pumpfunUrl: null,        // e.g. "https://pump.fun/coin/EPjFWdd..."
 
     // ISO 8601 format: "YYYY-MM-DDTHH:MM:SSZ"
-    launchDate: "2026-06-11T00:00:00Z",
+    launchDate: "2026-06-11T19:00:00Z",  // June 11 7 PM UTC = 3 PM EDT = June 12 2 AM Jakarta
     endDate: "2026-07-19T18:00:00Z",
 
     // Maps to CSS class body.theme-wcmc26 in /css/themes.css
