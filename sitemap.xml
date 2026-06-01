@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ════════════════════════════════════════════════════════
+       CHAOSLABSX SITEMAP
+       Submit to: https://search.google.com/search-console
+       Sitemap URL: https://chaoslabsx.com/sitemap.xml
+       Last updated: 2026-06-01
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- ── Homepage ───────────────────────────────────────────── -->
+  <url>
+    <loc>https://chaoslabsx.com/</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+
+    <image:image>
+      <image:loc>https://chaoslabsx.com/assets/og-image.png</image:loc>
+      <image:title>ChaosLabsX — Best Viral Event-Driven Meme Coins</image:title>
+      <image:caption>ChaosLabsX launches viral event-driven meme coins tied to real-world events. Join the memecoin community and ride every launch from start to finish.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ── WCMC26 — World Cup Meme Coin 2026 ──────────────────── -->
+  <url>
+    <loc>https://chaoslabsx.com/coin.html?id=wcmc26</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+
+    <image:image>
+      <image:loc>https://chaoslabsx.com/assets/wcmc26/thumb.webp</image:loc>
+      <image:title>World Cup Meme Coin 2026 ($WCMC26) — Buy the Best Viral Memecoin</image:title>
+      <image:caption>$WCMC26 — the official viral World Cup meme coin of 2026. Ride it from Opening Day to the Final on ChaosLabsX.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://chaoslabsx.com/assets/wcmc26/logo.webp</image:loc>
+      <image:title>WCMC26 Logo — World Cup Meme Coin 2026</image:title>
+      <image:caption>Official logo of $WCMC26, the best event-driven World Cup meme coin launched by ChaosLabsX.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ════════════════════════════════════════════════════════
+       ADD NEW COINS HERE when they launch.
+       Copy the block below, fill in the coin id and asset paths.
+
+  <url>
+    <loc>https://chaoslabsx.com/coin.html?id=YOURCOINID</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://chaoslabsx.com/assets/YOURCOINID/thumb.webp</image:loc>
+      <image:title>COIN FULL NAME (TICKER) — Buy the Best Viral Memecoin</image:title>
+      <image:caption>Description of the coin and event it is tied to.</image:caption>
+    </image:image>
+  </url>
+       ════════════════════════════════════════════════════════ -->
+
+</urlset>
