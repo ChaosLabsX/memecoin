@@ -367,7 +367,10 @@ function updateCoinSEO(coin) {
   const ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) ogUrl.content = pageUrl;
 
-  // JSON-LD — BreadcrumbList + Product
+  // JSON-LD — BreadcrumbList + WebPage
+  // Note: Product schema is intentionally NOT used here because meme coins
+  // don't have a fixed price, causing Google's required-field validation errors.
+  // BreadcrumbList (already validated ✅) + WebPage is the correct schema for this use case.
   const ld = document.getElementById('page-jsonld');
   if (ld) {
     ld.textContent = JSON.stringify({
@@ -382,20 +385,28 @@ function updateCoinSEO(coin) {
           ]
         },
         {
-          "@type": "Product",
-          "name": coin.fullName,
-          "alternateName": coin.ticker,
-          "description": coin.description,
+          "@type": "WebPage",
+          "@id": pageUrl,
           "url": pageUrl,
-          "image": imgUrl,
-          "brand": { "@type": "Brand", "name": "ChaosLabsX" },
-          "offers": {
-            "@type": "Offer",
-            "availability": coin.status === "live"
-              ? "https://schema.org/InStock"
-              : "https://schema.org/PreOrder",
-            "url": coin.pumpfunUrl || pageUrl,
-            "priceCurrency": "USD"
+          "name": `${coin.fullName} (${coin.ticker})`,
+          "description": coin.description,
+          "inLanguage": "en-US",
+          "isPartOf": { "@id": "https://chaoslabsx.com/#website" },
+          "image": { "@type": "ImageObject", "url": imgUrl },
+          "about": {
+            "@type": "Thing",
+            "name": coin.fullName,
+            "alternateName": coin.ticker,
+            "description": coin.description,
+            "image": imgUrl,
+            "url": pageUrl,
+            "sameAs": coin.pumpfunUrl ? [coin.pumpfunUrl, "https://x.com/ChaosLabsX"] : ["https://x.com/ChaosLabsX"]
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "ChaosLabsX",
+            "url": "https://chaoslabsx.com/",
+            "sameAs": ["https://x.com/ChaosLabsX"]
           }
         }
       ]
